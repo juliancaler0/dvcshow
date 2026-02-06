@@ -1,0 +1,7 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(start \"\" \"C:\\\\Users\\\\JulianCalero\\\\OneDrive - Associated Rebar\\\\Desktop\\\\Projects\\\\dvcshow\\\\index.html\")"
+    ]
+  }
+}
