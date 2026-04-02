@@ -819,63 +819,46 @@
         }
 
         /* ============================================
-           TRADE NIGHT BANNER
+           PAST EVENTS
            ============================================ */
-        .trade-night {
+        .past-events {
             padding: 80px 0;
             position: relative;
             background: var(--deep-navy);
             overflow: hidden;
         }
 
-        .trade-night-inner {
+        .past-events-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 3rem;
-            align-items: center;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .past-event-card {
             background: linear-gradient(145deg, rgba(255, 45, 149, 0.05), rgba(0, 212, 255, 0.05));
-            border: 1px solid rgba(255, 45, 149, 0.2);
+            border: 1px solid rgba(0, 212, 255, 0.2);
             border-radius: 4px;
-            padding: 3rem;
+            overflow: hidden;
             position: relative;
         }
 
-        .trade-night-inner::before {
+        .past-event-card::before {
             content: '';
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
             height: 3px;
-            background: linear-gradient(90deg, var(--neon-pink), var(--neon-yellow), var(--neon-pink));
+            background: linear-gradient(90deg, var(--neon-blue), var(--neon-pink), var(--neon-blue));
         }
 
-        .trade-night-text h2 {
-            font-family: 'Orbitron', sans-serif;
-            font-weight: 900;
-            font-size: clamp(1.4rem, 3.5vw, 2rem);
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            margin-bottom: 1rem;
-        }
-
-        .trade-night-text p {
-            color: var(--text-muted);
-            font-size: 1.05rem;
-            line-height: 1.7;
-            margin-bottom: 0.8rem;
-        }
-
-        .trade-night-text .highlight {
-            color: var(--neon-pink);
-            font-weight: 700;
-        }
-
-        .trade-night-image {
+        .past-event-image {
             text-align: center;
+            padding: 1.5rem 1.5rem 0;
         }
 
-        .trade-night-image img {
+        .past-event-image img {
             max-width: 100%;
             height: auto;
             border-radius: 4px;
@@ -884,8 +867,33 @@
             transition: transform 0.4s ease;
         }
 
-        .trade-night-image img:hover {
+        .past-event-image img:hover {
             transform: scale(1.02);
+        }
+
+        .past-event-info {
+            padding: 1.5rem;
+        }
+
+        .past-event-info h3 {
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 900;
+            font-size: clamp(1rem, 2.5vw, 1.3rem);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 0.75rem;
+            color: var(--text-primary);
+        }
+
+        .past-event-info p {
+            color: var(--text-muted);
+            font-size: 1rem;
+            line-height: 1.7;
+        }
+
+        .past-event-info .highlight {
+            color: var(--neon-pink);
+            font-weight: 700;
         }
 
         /* ============================================
@@ -1179,8 +1187,8 @@
            ============================================ */
         @media (max-width: 992px) {
             .about-grid,
-            .trade-night-inner,
-            .vendor-grid {
+            .vendor-grid,
+            .past-events-grid {
                 grid-template-columns: 1fr;
             }
 
@@ -1191,12 +1199,6 @@
             .about-image-wrapper {
                 order: -1;
                 max-width: 500px;
-                margin: 0 auto;
-            }
-
-            .trade-night-image {
-                order: -1;
-                max-width: 400px;
                 margin: 0 auto;
             }
         }
@@ -1299,8 +1301,9 @@
                 text-align: center;
             }
 
-            .trade-night-inner {
-                padding: 2rem 1.5rem;
+            .past-event-card {
+                max-width: 500px;
+                margin: 0 auto;
             }
         }
 
@@ -1332,8 +1335,8 @@
                 <li><a href="#about">About</a></li>
                 <li><a href="#details">Details</a></li>
                 <li><a href="#expect">What's There</a></li>
-                <li><a href="#trade-night">Trade Night</a></li>
                 <li><a href="#vendors">Vendors</a></li>
+                <li><a href="#past-events">Past Events</a></li>
             </ul>
             <div class="hamburger" id="hamburger">
                 <span></span>
@@ -1498,26 +1501,6 @@
         </div>
     </section>
 
-    <!-- ==================== TRADE NIGHT ==================== -->
-    <section class="trade-night" id="trade-night">
-        <div class="container">
-            <div class="trade-night-inner reveal">
-                <div class="trade-night-text">
-                    <h2><span class="neon-text-pink">Official</span> Trade Night</h2>
-                    <p>Kick off the weekend early! Our official trade night will be hosted by <span class="highlight">DVY Collectibles</span> in Martinez on <span class="highlight">Saturday night, April 11th</span>.</p>
-                    <p>Bring your cards, meet fellow collectors, and start wheeling and dealing before the main show.</p>
-                    <p style="margin-top: 1.5rem;">
-                        <strong style="color: var(--text-primary);">DVY Cards &amp; Collectibles</strong><br>
-                        1150 Arnold Drive Suite D, Martinez, CA<br>
-                        <span style="color: var(--neon-blue);">925-231-4338</span>
-                    </p>
-                </div>
-                <div class="trade-night-image">
-                    <img src="Images/Collab.png" alt="Trade Night at DVY Collectibles">
-                </div>
-            </div>
-        </div>
-    </section>
 
     <!-- ==================== VENDORS ==================== -->
     <section class="vendor-section" id="vendors">
@@ -1584,6 +1567,34 @@
         </div>
     </section>
 
+    <!-- ==================== PAST EVENTS ==================== -->
+    <section class="past-events" id="past-events">
+        <div class="container">
+            <h2 class="section-title neon-text-blue reveal">Past Events</h2>
+            <p class="section-subtitle reveal reveal-delay-1">A look back at previous shows and events.</p>
+            <div class="past-events-grid">
+                <div class="past-event-card reveal">
+                    <div class="past-event-image">
+                        <img src="Images/Flyer-old.png" alt="Previous Diablo Valley Card Show Flyer">
+                    </div>
+                    <div class="past-event-info">
+                        <h3>Diablo Valley Card Show</h3>
+                        <p>Our previous card show at the Concord Plaza Hotel.</p>
+                    </div>
+                </div>
+                <div class="past-event-card reveal reveal-delay-1">
+                    <div class="past-event-image">
+                        <img src="Images/Collab.png" alt="Trade Night at DVY Collectibles">
+                    </div>
+                    <div class="past-event-info">
+                        <h3>Official Trade Night</h3>
+                        <p>Trade night hosted by <span class="highlight">DVY Collectibles</span> in Martinez. Collectors gathered to trade cards and kick off the show weekend.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <!-- ==================== FOOTER ==================== -->
     <footer class="footer">
         <div class="container">
@@ -1598,8 +1609,8 @@
                         <li><a href="#about">About</a></li>
                         <li><a href="#details">Event Details</a></li>
                         <li><a href="#expect">What's There</a></li>
-                        <li><a href="#trade-night">Trade Night</a></li>
                         <li><a href="#vendors">Vendor Info</a></li>
+                        <li><a href="#past-events">Past Events</a></li>
                     </ul>
                 </div>
                 <div>
