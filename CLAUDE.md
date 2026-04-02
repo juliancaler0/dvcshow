@@ -25,12 +25,12 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Event Details (keep current)
 
-- **Dates:** February 28 & March 1, 2026
+- **Dates:** April 11 & 12, 2026
 - **Hours:** 10 AM – 4 PM
 - **Venue:** Concord Plaza Hotel, 45 John Glen Dr, Concord, CA
 - **Admission:** $10 (kids 10 & under free)
 - **Tables:** 120+
-- **Trade Night:** DVY Collectibles, 1150 Arnold Drive Suite D, Martinez, CA — Feb 28th evening
+- **Trade Night:** DVY Collectibles, 1150 Arnold Drive Suite D, Martinez, CA — Apr 11th evening
 - **Instagram:** @dvcshow
 
 ## Deployment
