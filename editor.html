@@ -1,0 +1,982 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    <title>DVCSHOW — Site Editor</title>
+    <link rel="icon" type="image/png" href="Images/Logo.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Orbitron:wght@400;700;900&family=Chakra+Petch:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --neon-blue: #00d4ff;
+            --neon-pink: #ff2d95;
+            --neon-yellow: #ffe135;
+            --neon-green: #39ff14;
+            --deep-navy: #0a0e27;
+            --darker-navy: #060918;
+            --card-dark: #0d1235;
+            --card-border: #1a2555;
+            --text-primary: #f0f0f0;
+            --text-muted: #8892b0;
+        }
+
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Chakra Petch', sans-serif;
+            background: var(--darker-navy);
+            color: var(--text-primary);
+            height: 100vh;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .topbar {
+            background: linear-gradient(90deg, var(--darker-navy), var(--deep-navy));
+            border-bottom: 1px solid var(--card-border);
+            padding: 12px 20px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            flex-shrink: 0;
+            min-height: 60px;
+        }
+
+        .topbar h1 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1rem;
+            font-weight: 900;
+            color: var(--neon-blue);
+            text-shadow: 0 0 12px rgba(0, 212, 255, 0.5);
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .topbar h1 span { color: var(--neon-pink); text-shadow: 0 0 12px rgba(255, 45, 149, 0.5); }
+
+        .topbar .spacer { flex: 1; }
+
+        .status-pill {
+            font-family: 'Press Start 2P', monospace;
+            font-size: 0.55rem;
+            padding: 6px 12px;
+            border: 1px solid var(--text-muted);
+            border-radius: 2px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.2s ease;
+        }
+
+        .status-pill.ok { color: var(--neon-green); border-color: var(--neon-green); box-shadow: 0 0 12px rgba(57, 255, 20, 0.2); }
+        .status-pill.warn { color: var(--neon-yellow); border-color: var(--neon-yellow); }
+        .status-pill.err { color: var(--neon-pink); border-color: var(--neon-pink); }
+        .status-pill.working { color: var(--neon-blue); border-color: var(--neon-blue); animation: pulseFade 1.2s ease-in-out infinite; }
+
+        @keyframes pulseFade { 0%, 100% { opacity: 1; } 50% { opacity: 0.5; } }
+
+        .btn {
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 700;
+            font-size: 0.75rem;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            padding: 10px 18px;
+            border: none;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            background: transparent;
+            color: var(--text-primary);
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, var(--neon-green), #2ecc40);
+            color: #000;
+            box-shadow: 0 0 16px rgba(57, 255, 20, 0.3);
+        }
+        .btn-primary:hover { box-shadow: 0 0 30px rgba(57, 255, 20, 0.5); transform: translateY(-1px); }
+        .btn-primary:disabled { background: var(--card-border); color: var(--text-muted); cursor: not-allowed; box-shadow: none; transform: none; }
+
+        .btn-ghost { border: 1px solid var(--card-border); color: var(--text-muted); }
+        .btn-ghost:hover { border-color: var(--neon-blue); color: var(--neon-blue); }
+
+        .workspace {
+            flex: 1;
+            display: flex;
+            min-height: 0;
+        }
+
+        .sidebar {
+            width: 320px;
+            background: var(--deep-navy);
+            border-right: 1px solid var(--card-border);
+            padding: 20px;
+            overflow-y: auto;
+            flex-shrink: 0;
+        }
+
+        .sidebar h2 {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.7rem;
+            font-weight: 700;
+            color: var(--neon-blue);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 12px;
+            padding-bottom: 8px;
+            border-bottom: 1px solid var(--card-border);
+        }
+
+        .sidebar-section { margin-bottom: 28px; }
+
+        .field { margin-bottom: 14px; }
+        .field label {
+            display: block;
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 6px;
+        }
+        .field input[type="text"],
+        .field input[type="url"],
+        .field input[type="password"] {
+            width: 100%;
+            padding: 10px 12px;
+            background: var(--card-dark);
+            border: 1px solid var(--card-border);
+            color: var(--text-primary);
+            font-family: 'Chakra Petch', sans-serif;
+            font-size: 0.9rem;
+            border-radius: 2px;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+        .field input:focus {
+            outline: none;
+            border-color: var(--neon-blue);
+            box-shadow: 0 0 8px rgba(0, 212, 255, 0.2);
+        }
+
+        .sidebar .btn { width: 100%; margin-top: 8px; }
+
+        .hint {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            line-height: 1.5;
+            padding: 10px 12px;
+            background: rgba(13, 18, 53, 0.6);
+            border-left: 2px solid var(--neon-blue);
+            margin-top: 12px;
+        }
+
+        .backup-list {
+            list-style: none;
+            font-size: 0.8rem;
+            max-height: 200px;
+            overflow-y: auto;
+        }
+        .backup-list li {
+            padding: 8px 10px;
+            background: var(--card-dark);
+            margin-bottom: 4px;
+            border: 1px solid var(--card-border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 8px;
+        }
+        .backup-list .ts { color: var(--text-muted); font-size: 0.75rem; }
+        .backup-list .restore {
+            font-size: 0.65rem;
+            padding: 4px 8px;
+            cursor: pointer;
+            border: 1px solid var(--neon-yellow);
+            color: var(--neon-yellow);
+            background: transparent;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        .backup-list .restore:hover { background: rgba(255, 225, 53, 0.1); }
+
+        .canvas {
+            flex: 1;
+            background: #000;
+            position: relative;
+            overflow: hidden;
+        }
+        .canvas iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            background: var(--deep-navy);
+        }
+
+        .login-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(6, 9, 24, 0.97);
+            z-index: 10000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(8px);
+        }
+        .login-overlay.hidden { display: none; }
+        .login-box {
+            background: var(--deep-navy);
+            border: 1px solid var(--card-border);
+            box-shadow: 0 0 40px rgba(0, 212, 255, 0.15), 0 20px 60px rgba(0,0,0,0.5);
+            padding: 40px;
+            max-width: 380px;
+            width: 90%;
+            text-align: center;
+        }
+        .login-box h2 {
+            font-family: 'Orbitron', sans-serif;
+            color: var(--neon-blue);
+            text-shadow: 0 0 12px rgba(0, 212, 255, 0.4);
+            font-size: 1.2rem;
+            margin-bottom: 8px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+        .login-box p {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            margin-bottom: 24px;
+        }
+        .login-box .field { text-align: left; }
+        .login-error {
+            color: var(--neon-pink);
+            font-size: 0.85rem;
+            margin-top: 8px;
+            min-height: 18px;
+        }
+
+        .help-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(6, 9, 24, 0.85);
+            z-index: 9000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            backdrop-filter: blur(4px);
+        }
+        .help-overlay.open { display: flex; }
+        .help-box {
+            background: var(--deep-navy);
+            border: 1px solid var(--card-border);
+            padding: 32px;
+            max-width: 540px;
+            width: 100%;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+        .help-box h2 {
+            font-family: 'Orbitron', sans-serif;
+            color: var(--neon-blue);
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 16px;
+        }
+        .help-box ol { padding-left: 20px; line-height: 1.8; color: var(--text-primary); }
+        .help-box ol li { margin-bottom: 8px; }
+        .help-box strong { color: var(--neon-yellow); }
+
+        .toast {
+            position: fixed;
+            bottom: 24px;
+            left: 50%;
+            transform: translate(-50%, 20px);
+            background: var(--deep-navy);
+            color: var(--text-primary);
+            padding: 14px 24px;
+            border: 1px solid var(--card-border);
+            font-family: 'Chakra Petch', sans-serif;
+            font-size: 0.9rem;
+            z-index: 12000;
+            opacity: 0;
+            transition: opacity 0.3s, transform 0.3s;
+            pointer-events: none;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.5);
+        }
+        .toast.show { opacity: 1; transform: translate(-50%, 0); }
+        .toast.success { border-color: var(--neon-green); color: var(--neon-green); }
+        .toast.error { border-color: var(--neon-pink); color: var(--neon-pink); }
+
+        .mobile-toggle { display: none; }
+
+        @media (max-width: 900px) {
+            .sidebar {
+                position: fixed;
+                left: -340px;
+                top: 60px;
+                bottom: 0;
+                z-index: 500;
+                transition: left 0.3s ease;
+                box-shadow: 8px 0 30px rgba(0,0,0,0.5);
+            }
+            .sidebar.open { left: 0; }
+            .mobile-toggle {
+                display: inline-block;
+                background: transparent;
+                border: 1px solid var(--neon-blue);
+                color: var(--neon-blue);
+                padding: 8px 12px;
+                font-family: 'Orbitron', sans-serif;
+                font-size: 0.75rem;
+                cursor: pointer;
+            }
+            .topbar h1 { font-size: 0.8rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="login-overlay" id="loginOverlay">
+        <div class="login-box">
+            <h2>Editor Login</h2>
+            <p>Enter the editor password to make changes to the live site.</p>
+            <div class="field">
+                <label for="loginPassword">Password</label>
+                <input type="password" id="loginPassword" autocomplete="current-password">
+            </div>
+            <button class="btn btn-primary" id="loginBtn" style="width: 100%;">Sign In</button>
+            <div class="login-error" id="loginError"></div>
+        </div>
+    </div>
+
+    <div class="topbar">
+        <button class="mobile-toggle" id="mobileToggle">Menu</button>
+        <h1>DVCSHOW <span>Editor</span></h1>
+        <div class="spacer"></div>
+        <span class="status-pill" id="statusPill">Loading</span>
+        <button class="btn btn-ghost" id="helpBtn">Help</button>
+        <button class="btn btn-ghost" id="logoutBtn">Sign Out</button>
+        <button class="btn btn-primary" id="saveBtn" disabled>Save &amp; Publish</button>
+    </div>
+
+    <div class="workspace">
+
+        <aside class="sidebar" id="sidebar">
+
+            <div class="sidebar-section">
+                <h2>Quick Links</h2>
+                <div class="field">
+                    <label for="ticketLink">Eventbrite / Ticket URL</label>
+                    <input type="url" id="ticketLink" placeholder="https://www.eventbrite.com/...">
+                </div>
+                <div class="field">
+                    <label for="instaLink">Instagram URL</label>
+                    <input type="url" id="instaLink" placeholder="https://www.instagram.com/...">
+                </div>
+                <button class="btn btn-ghost" id="applyLinksBtn">Apply Links</button>
+            </div>
+
+            <div class="sidebar-section">
+                <h2>Past Events</h2>
+                <button class="btn btn-ghost" id="addPastEventBtn">+ Add Past Event Card</button>
+                <p class="hint">Hover over an existing past event card to delete it.</p>
+            </div>
+
+            <div class="sidebar-section">
+                <h2>Recent Backups</h2>
+                <ul class="backup-list" id="backupList">
+                    <li><span class="ts">Loading...</span></li>
+                </ul>
+                <p class="hint">The last 20 versions are kept. Click "Restore" to roll back.</p>
+            </div>
+
+            <div class="sidebar-section">
+                <h2>How to Edit</h2>
+                <p class="hint">
+                    <strong>Click any text</strong> on the page to edit it directly.
+                    <strong>Hover over any image</strong> and click "Change Image" to upload a replacement.
+                    Use Quick Links to update URLs everywhere at once.
+                    Click <strong>Save &amp; Publish</strong> when done.
+                </p>
+            </div>
+
+        </aside>
+
+        <div class="canvas">
+            <iframe id="siteFrame" src="index.html?editor=1" title="Site preview"></iframe>
+        </div>
+
+    </div>
+
+    <div class="help-overlay" id="helpOverlay">
+        <div class="help-box">
+            <h2>How the Editor Works</h2>
+            <ol>
+                <li><strong>Click any text</strong> on the page in the preview area &mdash; headings, paragraphs, dates &mdash; and just start typing.</li>
+                <li><strong>Hover over an image</strong> (flyer, logo, past event photos) and click the green "Change Image" button to upload a new one. PNG, JPG, WEBP, GIF accepted.</li>
+                <li>Use the sidebar to update the <strong>Ticket URL</strong> and <strong>Instagram URL</strong>. These get applied to every matching link on the site.</li>
+                <li>To add a new <strong>Past Event</strong> card, click the button in the sidebar. To remove one, hover over a card and click its delete button.</li>
+                <li>When you're happy, click <strong>Save &amp; Publish</strong>. The previous version is automatically backed up &mdash; restore from the sidebar if needed.</li>
+                <li>If something goes wrong, just refresh this page to discard all unsaved edits.</li>
+            </ol>
+            <button class="btn btn-primary" id="closeHelpBtn" style="margin-top: 20px;">Got it</button>
+        </div>
+    </div>
+
+    <div class="toast" id="toast"></div>
+
+    <script>
+    (function () {
+        'use strict';
+
+        const API_URL = 'editor-api.php';
+        const STORAGE_KEY = 'dvcshow_editor_pw';
+
+        let password = sessionStorage.getItem(STORAGE_KEY) || '';
+        let dirty = false;
+
+        const loginOverlay = document.getElementById('loginOverlay');
+        const loginPassword = document.getElementById('loginPassword');
+        const loginBtn = document.getElementById('loginBtn');
+        const loginError = document.getElementById('loginError');
+        const logoutBtn = document.getElementById('logoutBtn');
+        const saveBtn = document.getElementById('saveBtn');
+        const statusPill = document.getElementById('statusPill');
+        const iframe = document.getElementById('siteFrame');
+        const ticketLink = document.getElementById('ticketLink');
+        const instaLink = document.getElementById('instaLink');
+        const applyLinksBtn = document.getElementById('applyLinksBtn');
+        const addPastEventBtn = document.getElementById('addPastEventBtn');
+        const backupList = document.getElementById('backupList');
+        const helpBtn = document.getElementById('helpBtn');
+        const helpOverlay = document.getElementById('helpOverlay');
+        const closeHelpBtn = document.getElementById('closeHelpBtn');
+        const toast = document.getElementById('toast');
+        const mobileToggle = document.getElementById('mobileToggle');
+        const sidebar = document.getElementById('sidebar');
+
+        function setStatus(text, cls) {
+            statusPill.textContent = text;
+            statusPill.className = 'status-pill ' + (cls || '');
+        }
+
+        function showToast(msg, kind) {
+            toast.textContent = msg;
+            toast.className = 'toast show ' + (kind || '');
+            setTimeout(() => { toast.className = 'toast ' + (kind || ''); }, 3000);
+        }
+
+        function markDirty() {
+            if (!dirty) {
+                dirty = true;
+                setStatus('Unsaved changes', 'warn');
+            }
+        }
+
+        async function api(action, opts) {
+            opts = opts || {};
+            const headers = Object.assign({}, opts.headers || {});
+            headers['X-Editor-Password'] = password;
+            const res = await fetch(API_URL + '?action=' + encodeURIComponent(action), {
+                method: opts.method || 'POST',
+                headers: headers,
+                body: opts.body
+            });
+            if (res.status === 401) {
+                sessionStorage.removeItem(STORAGE_KEY);
+                password = '';
+                showLogin();
+                throw new Error('Unauthorized');
+            }
+            const text = await res.text();
+            let json;
+            try { json = JSON.parse(text); } catch { throw new Error('Server returned non-JSON: ' + text.slice(0, 200)); }
+            if (!res.ok) throw new Error(json.error || 'Request failed');
+            return json;
+        }
+
+        function showLogin() {
+            loginOverlay.classList.remove('hidden');
+            loginPassword.value = '';
+            loginPassword.focus();
+        }
+        function hideLogin() {
+            loginOverlay.classList.add('hidden');
+        }
+
+        async function tryLogin(pw) {
+            const oldPw = password;
+            password = pw;
+            try {
+                await api('verify');
+                sessionStorage.setItem(STORAGE_KEY, pw);
+                hideLogin();
+                setStatus('Ready', 'ok');
+                loadBackups();
+                return true;
+            } catch (e) {
+                password = oldPw;
+                if (e.message !== 'Unauthorized') {
+                    loginError.textContent = e.message;
+                }
+                return false;
+            }
+        }
+
+        loginBtn.addEventListener('click', async () => {
+            loginError.textContent = '';
+            const pw = loginPassword.value;
+            if (!pw) { loginError.textContent = 'Enter a password.'; return; }
+            const ok = await tryLogin(pw);
+            if (!ok) loginError.textContent = 'Wrong password.';
+        });
+
+        loginPassword.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter') loginBtn.click();
+        });
+
+        logoutBtn.addEventListener('click', () => {
+            sessionStorage.removeItem(STORAGE_KEY);
+            password = '';
+            showLogin();
+            setStatus('Signed out', 'warn');
+        });
+
+        const EDITABLE_SELECTOR = [
+            'h1', 'h2', 'h3', 'h4', 'h5', 'h6',
+            'p', 'li',
+            '.hero-tagline', '.hero-headline', '.hero-date', '.hero-venue',
+            '.hero-free-badge', '.stat-number', '.stat-label',
+            '.detail-sub', '.section-title', '.section-subtitle',
+            '.ticker-content span', '.retro-badge',
+            '.highlight',
+            '.btn',
+            '.nav-logo-text'
+        ].join(', ');
+
+        function buildEditorStylesText() {
+            return [
+                '[data-edit="text"] {',
+                '  outline: 1px dashed transparent;',
+                '  transition: outline-color 0.15s, background 0.15s;',
+                '  cursor: text;',
+                '  min-width: 4px;',
+                '  min-height: 1em;',
+                '}',
+                '[data-edit="text"]:hover {',
+                '  outline-color: rgba(57, 255, 20, 0.5);',
+                '  background: rgba(57, 255, 20, 0.06);',
+                '}',
+                '[data-edit="text"]:focus {',
+                '  outline: 2px solid #39ff14 !important;',
+                '  background: rgba(57, 255, 20, 0.1);',
+                '  box-shadow: 0 0 12px rgba(57, 255, 20, 0.2);',
+                '}',
+                '.__img-wrap { position: relative; display: inline-block; }',
+                '.__img-wrap .__img-overlay {',
+                '  position: absolute; inset: 0;',
+                '  background: rgba(0, 0, 0, 0.55);',
+                '  display: flex; align-items: center; justify-content: center;',
+                '  opacity: 0; transition: opacity 0.15s;',
+                '  pointer-events: none; z-index: 10;',
+                '}',
+                '.__img-wrap:hover .__img-overlay { opacity: 1; pointer-events: auto; }',
+                '.__img-overlay button {',
+                '  background: #39ff14; color: #000; border: none;',
+                '  padding: 10px 18px; font-family: Orbitron, sans-serif;',
+                '  font-weight: 700; font-size: 0.75rem;',
+                '  letter-spacing: 1.5px; text-transform: uppercase;',
+                '  cursor: pointer; box-shadow: 0 0 15px rgba(57, 255, 20, 0.6);',
+                '}',
+                '.__card-controls {',
+                '  position: absolute; top: 12px; right: 12px;',
+                '  z-index: 20; display: flex; gap: 6px;',
+                '}',
+                '.__card-controls button {',
+                '  background: rgba(255, 45, 149, 0.95); color: white; border: none;',
+                '  padding: 6px 12px; font-family: Orbitron, sans-serif;',
+                '  font-size: 0.7rem; font-weight: 700; text-transform: uppercase;',
+                '  letter-spacing: 1px; cursor: pointer;',
+                '  box-shadow: 0 0 10px rgba(255, 45, 149, 0.4);',
+                '}',
+                '.__card-controls button:hover { background: #ff2d95; }',
+                '.past-event-card { position: relative; }'
+            ].join('\n');
+        }
+
+        function injectEditorIntoIframe() {
+            const doc = iframe.contentDocument;
+            if (!doc) return;
+
+            const style = doc.createElement('style');
+            style.id = '__editorStyles';
+            style.appendChild(doc.createTextNode(buildEditorStylesText()));
+            doc.head.appendChild(style);
+
+            doc.documentElement.style.scrollBehavior = 'auto';
+
+            doc.querySelectorAll(EDITABLE_SELECTOR).forEach(makeEditable);
+            doc.querySelectorAll('img').forEach(addImageSwap);
+            doc.querySelectorAll('.past-event-card').forEach(addCardDelete);
+
+            doc.addEventListener('click', (e) => {
+                const a = e.target.closest('a');
+                if (a && a.getAttribute('href')) {
+                    e.preventDefault();
+                }
+                if (e.target.closest('form')) {
+                    e.preventDefault();
+                }
+            }, true);
+
+            doc.addEventListener('input', () => markDirty(), true);
+
+            const ev = doc.querySelector('a[href*="eventbrite"]');
+            if (ev) ticketLink.value = ev.href;
+            const ig = doc.querySelector('a[href*="instagram"]');
+            if (ig) instaLink.value = ig.href;
+
+            setStatus(password ? 'Ready' : 'Sign in', 'ok');
+            saveBtn.disabled = false;
+        }
+
+        function makeEditable(el) {
+            if (el.closest('form')) return;
+            if (el.hasAttribute('data-edit')) return;
+            el.setAttribute('data-edit', 'text');
+            el.setAttribute('contenteditable', 'true');
+            el.addEventListener('paste', (e) => {
+                e.preventDefault();
+                const txt = (e.clipboardData || window.clipboardData).getData('text/plain');
+                iframe.contentDocument.execCommand('insertText', false, txt);
+            });
+            el.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' && el.tagName !== 'P' && el.tagName !== 'LI') {
+                    e.preventDefault();
+                }
+            });
+        }
+
+        function addImageSwap(img) {
+            if (img.closest('.__img-wrap')) return;
+            const doc = img.ownerDocument;
+            const wrap = doc.createElement('span');
+            wrap.className = '__img-wrap';
+            const computed = doc.defaultView.getComputedStyle(img);
+            if (computed.display === 'block') wrap.style.display = 'block';
+            const parent = img.parentNode;
+            parent.insertBefore(wrap, img);
+            wrap.appendChild(img);
+
+            const overlay = doc.createElement('div');
+            overlay.className = '__img-overlay';
+            const button = doc.createElement('button');
+            button.type = 'button';
+            button.textContent = 'Change Image';
+            overlay.appendChild(button);
+            wrap.appendChild(overlay);
+
+            button.addEventListener('click', (e) => {
+                e.preventDefault();
+                e.stopPropagation();
+                pickAndUpload(img);
+            });
+        }
+
+        function pickAndUpload(targetImg) {
+            const input = document.createElement('input');
+            input.type = 'file';
+            input.accept = 'image/png,image/jpeg,image/webp,image/gif';
+            input.addEventListener('change', async () => {
+                const file = input.files && input.files[0];
+                if (!file) return;
+                if (file.size > 8 * 1024 * 1024) {
+                    showToast('Image too large (max 8 MB)', 'error');
+                    return;
+                }
+                setStatus('Uploading image...', 'working');
+                try {
+                    const fd = new FormData();
+                    fd.append('image', file);
+                    const result = await api('upload', { body: fd });
+                    targetImg.src = result.path + '?t=' + Date.now();
+                    targetImg.setAttribute('data-final-src', result.path);
+                    markDirty();
+                    showToast('Image uploaded', 'success');
+                    setStatus('Unsaved changes', 'warn');
+                } catch (e) {
+                    showToast('Upload failed: ' + e.message, 'error');
+                    setStatus('Ready', 'ok');
+                }
+            });
+            input.click();
+        }
+
+        function addCardDelete(card) {
+            if (card.querySelector('.__card-controls')) return;
+            const doc = card.ownerDocument;
+            const controls = doc.createElement('div');
+            controls.className = '__card-controls';
+            const btn = doc.createElement('button');
+            btn.type = 'button';
+            btn.textContent = 'Delete';
+            controls.appendChild(btn);
+            card.appendChild(controls);
+            btn.addEventListener('click', (e) => {
+                e.preventDefault();
+                if (confirm('Delete this past event card?')) {
+                    card.remove();
+                    markDirty();
+                }
+            });
+        }
+
+        function buildNewPastEventCard(doc) {
+            const card = doc.createElement('div');
+            card.className = 'past-event-card reveal visible';
+
+            const imageWrap = doc.createElement('div');
+            imageWrap.className = 'past-event-image';
+            const img = doc.createElement('img');
+            img.setAttribute('src', 'Images/Logo.png');
+            img.setAttribute('alt', 'New past event');
+            imageWrap.appendChild(img);
+
+            const infoWrap = doc.createElement('div');
+            infoWrap.className = 'past-event-info';
+            const h3 = doc.createElement('h3');
+            h3.textContent = 'New Past Event Title';
+            const p = doc.createElement('p');
+            p.textContent = 'Click here to describe this past event. Hover over the image above to change it.';
+            infoWrap.appendChild(h3);
+            infoWrap.appendChild(p);
+
+            card.appendChild(imageWrap);
+            card.appendChild(infoWrap);
+            return card;
+        }
+
+        iframe.addEventListener('load', () => {
+            try {
+                injectEditorIntoIframe();
+            } catch (e) {
+                console.error(e);
+                setStatus('Editor failed to load', 'err');
+            }
+        });
+
+        applyLinksBtn.addEventListener('click', () => {
+            const doc = iframe.contentDocument;
+            if (!doc) return;
+            let count = 0;
+            if (ticketLink.value) {
+                doc.querySelectorAll('a[href*="eventbrite"]').forEach(a => {
+                    a.href = ticketLink.value;
+                    count++;
+                });
+            }
+            if (instaLink.value) {
+                doc.querySelectorAll('a[href*="instagram"]').forEach(a => {
+                    a.href = instaLink.value;
+                    count++;
+                });
+            }
+            markDirty();
+            showToast('Updated ' + count + ' link' + (count === 1 ? '' : 's'), 'success');
+        });
+
+        addPastEventBtn.addEventListener('click', () => {
+            const doc = iframe.contentDocument;
+            const grid = doc.querySelector('.past-events-grid');
+            if (!grid) {
+                showToast('Could not find past events section', 'error');
+                return;
+            }
+            const card = buildNewPastEventCard(doc);
+            grid.appendChild(card);
+            card.querySelectorAll('h3, p').forEach(makeEditable);
+            addImageSwap(card.querySelector('img'));
+            addCardDelete(card);
+            markDirty();
+            showToast('New past event card added', 'success');
+            card.scrollIntoView({ behavior: 'smooth', block: 'center' });
+        });
+
+        async function buildCleanHtml() {
+            const doc = iframe.contentDocument;
+            const cloned = doc.documentElement.cloneNode(true);
+
+            const injected = cloned.querySelector('#__editorStyles');
+            if (injected) injected.remove();
+
+            cloned.querySelectorAll('[data-edit]').forEach(el => {
+                el.removeAttribute('data-edit');
+                el.removeAttribute('contenteditable');
+                el.removeAttribute('spellcheck');
+            });
+
+            cloned.querySelectorAll('.__img-wrap').forEach(wrap => {
+                const img = wrap.querySelector('img');
+                if (img) {
+                    if (img.hasAttribute('data-final-src')) {
+                        img.setAttribute('src', img.getAttribute('data-final-src'));
+                        img.removeAttribute('data-final-src');
+                    }
+                    wrap.parentNode.insertBefore(img, wrap);
+                }
+                wrap.remove();
+            });
+
+            cloned.querySelectorAll('.__img-overlay, .__card-controls').forEach(el => el.remove());
+
+            const heroStars = cloned.querySelector('#heroStars');
+            if (heroStars) while (heroStars.firstChild) heroStars.removeChild(heroStars.firstChild);
+            const particles = cloned.querySelector('#particles');
+            if (particles) while (particles.firstChild) particles.removeChild(particles.firstChild);
+
+            const hamb = cloned.querySelector('.hamburger');
+            if (hamb) hamb.classList.remove('active');
+            const navLinks = cloned.querySelector('.nav-links');
+            if (navLinks) navLinks.classList.remove('open');
+            const navbar = cloned.querySelector('.navbar');
+            if (navbar) navbar.classList.remove('scrolled');
+
+            cloned.querySelectorAll('.reveal.visible').forEach(el => el.classList.remove('visible'));
+
+            cloned.style.scrollBehavior = '';
+            if (!cloned.getAttribute('style')) cloned.removeAttribute('style');
+
+            cloned.querySelectorAll('.past-event-card').forEach(c => {
+                if (c.style.position === 'relative') c.style.position = '';
+                if (!c.getAttribute('style')) c.removeAttribute('style');
+            });
+
+            return '<!DOCTYPE html>\n' + cloned.outerHTML;
+        }
+
+        saveBtn.addEventListener('click', async () => {
+            if (!confirm('This will publish your changes to the live website. Continue?')) return;
+            setStatus('Saving...', 'working');
+            saveBtn.disabled = true;
+            try {
+                const html = await buildCleanHtml();
+                await api('save', {
+                    headers: { 'Content-Type': 'text/html; charset=utf-8' },
+                    body: html
+                });
+                dirty = false;
+                setStatus('Saved', 'ok');
+                showToast('Changes published to live site', 'success');
+                loadBackups();
+            } catch (e) {
+                showToast('Save failed: ' + e.message, 'error');
+                setStatus('Save failed', 'err');
+            } finally {
+                saveBtn.disabled = false;
+            }
+        });
+
+        function clearChildren(node) {
+            while (node.firstChild) node.removeChild(node.firstChild);
+        }
+
+        function showBackupMessage(text) {
+            clearChildren(backupList);
+            const li = document.createElement('li');
+            const span = document.createElement('span');
+            span.className = 'ts';
+            span.textContent = text;
+            li.appendChild(span);
+            backupList.appendChild(li);
+        }
+
+        async function loadBackups() {
+            try {
+                const result = await api('backups', { method: 'GET' });
+                renderBackups(result.backups || []);
+            } catch (e) {
+                showBackupMessage('Could not load backups');
+            }
+        }
+
+        function renderBackups(items) {
+            if (!items.length) {
+                showBackupMessage('No backups yet');
+                return;
+            }
+            clearChildren(backupList);
+            items.forEach(item => {
+                const li = document.createElement('li');
+                const ts = document.createElement('span');
+                ts.className = 'ts';
+                ts.textContent = formatBackupTs(item);
+                const btn = document.createElement('button');
+                btn.className = 'restore';
+                btn.textContent = 'Restore';
+                btn.addEventListener('click', () => restoreBackup(item));
+                li.appendChild(ts);
+                li.appendChild(btn);
+                backupList.appendChild(li);
+            });
+        }
+
+        function formatBackupTs(filename) {
+            const m = filename.match(/index-(\d{4})(\d{2})(\d{2})-(\d{2})(\d{2})(\d{2})\.html/);
+            if (!m) return filename;
+            return m[2] + '/' + m[3] + '/' + m[1] + ' ' + m[4] + ':' + m[5];
+        }
+
+        async function restoreBackup(filename) {
+            if (!confirm('Restore the version from ' + formatBackupTs(filename) + '? Current site will be backed up first.')) return;
+            setStatus('Restoring...', 'working');
+            try {
+                const fd = new FormData();
+                fd.append('filename', filename);
+                await api('restore', { body: fd });
+                showToast('Backup restored. Reloading...', 'success');
+                setTimeout(() => location.reload(), 1000);
+            } catch (e) {
+                showToast('Restore failed: ' + e.message, 'error');
+                setStatus('Ready', 'ok');
+            }
+        }
+
+        helpBtn.addEventListener('click', () => helpOverlay.classList.add('open'));
+        closeHelpBtn.addEventListener('click', () => helpOverlay.classList.remove('open'));
+        helpOverlay.addEventListener('click', (e) => {
+            if (e.target === helpOverlay) helpOverlay.classList.remove('open');
+        });
+
+        mobileToggle.addEventListener('click', () => sidebar.classList.toggle('open'));
+
+        window.addEventListener('beforeunload', (e) => {
+            if (dirty) {
+                e.preventDefault();
+                e.returnValue = '';
+                return '';
+            }
+        });
+
+        (async function init() {
+            setStatus('Loading', 'working');
+            if (password) {
+                try {
+                    await api('verify');
+                    hideLogin();
+                    loadBackups();
+                } catch {
+                    showLogin();
+                }
+            } else {
+                showLogin();
+            }
+        })();
+
+    })();
+    </script>
+</body>
+</html>

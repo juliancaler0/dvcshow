@@ -1,0 +1,7 @@
+# Local-only files
+CLAUDE.md
+.claude/
+
+# Editor — server-side secrets and state, never commit
+editor-config.php
+.editor-backups/
