@@ -4,11 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Diablo Valley Card Show — Buy, Sell, Trade Cards & Collectibles</title>
-    <meta name="description" content="Diablo Valley Card Show — The Bay Area's premier sports cards, trading cards, and collectibles convention. 120+ vendor tables. April 11th & 12th at Concord Plaza Hotel.">
-    <meta name="keywords" content="card show, sports cards, trading cards, Pokemon, collectibles, Concord CA, Bay Area, card convention">
-    <meta property="og:title" content="Diablo Valley Card Show">
-    <meta property="og:description" content="The Bay Area's premier card & collectibles show. 120+ tables. Apr 11 & 12 at Concord Plaza Hotel.">
-    <meta property="og:image" content="Images/Logo.png">
+    <meta name="description" content="Diablo Valley Card Show — The Bay Area's premier TCG, sports cards, and collectibles show. FREE admission. 120+ vendor tables. June 6th & 7th, 2026 at Concord High School.">
+    <meta name="keywords" content="card show, TCG show, sports cards, trading cards, Pokemon, collectibles, Concord CA, Bay Area, card convention, free admission">
+    <meta property="og:title" content="Diablo Valley Card Show — FREE Admission">
+    <meta property="og:description" content="The Bay Area's premier TCG & collectibles show. 120+ tables. FREE admission. June 6 & 7, 2026 at Concord High School.">
+    <meta property="og:image" content="Images/Flyer-2026.png">
     <meta property="og:type" content="website">
     <link rel="icon" type="image/png" href="Images/Logo.png">
 
@@ -483,8 +483,29 @@
         .hero-venue {
             font-size: 1rem;
             color: rgba(255, 224, 130, 0.7);
-            margin-bottom: 2.5rem;
+            margin-bottom: 1.2rem;
             letter-spacing: 1px;
+        }
+
+        .hero-free-badge {
+            display: inline-block;
+            font-family: 'Press Start 2P', cursive;
+            font-size: clamp(0.55rem, 1.6vw, 0.8rem);
+            color: var(--neon-green);
+            background: rgba(10, 0, 21, 0.55);
+            border: 2px solid var(--neon-green);
+            padding: 10px 18px;
+            margin-bottom: 2rem;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            text-shadow: 0 0 10px rgba(57, 255, 20, 0.6), 0 0 25px rgba(57, 255, 20, 0.3);
+            box-shadow: 0 0 20px rgba(57, 255, 20, 0.2), inset 0 0 15px rgba(57, 255, 20, 0.05);
+            animation: pulseGreen 2.4s ease-in-out infinite;
+        }
+
+        @keyframes pulseGreen {
+            0%, 100% { box-shadow: 0 0 20px rgba(57, 255, 20, 0.2), inset 0 0 15px rgba(57, 255, 20, 0.05); }
+            50% { box-shadow: 0 0 35px rgba(57, 255, 20, 0.45), inset 0 0 20px rgba(57, 255, 20, 0.1); }
         }
 
         .hero-cta-group {
@@ -1358,13 +1379,14 @@
         <div class="particles" id="particles"></div>
         <div class="hero-content">
             <img src="Images/Logo.png" alt="Diablo Valley Card Show" class="hero-logo">
-            <p class="hero-tagline">The Bay Area's Premier Card & Collectibles Event</p>
-            <h1 class="hero-headline">Buy &bull; Sell &bull; Trade &bull; Collect</h1>
-            <p class="hero-date">April 11th &amp; 12th, 2026</p>
-            <p class="hero-venue">Concord Plaza Hotel &mdash; 45 John Glen Dr, Concord, CA</p>
+            <p class="hero-tagline">The Bay Area's Premier TCG & Collectibles Show</p>
+            <h1 class="hero-headline">Buy &bull; Sell &bull; Trade &bull; Connect</h1>
+            <p class="hero-date">June 6th &amp; 7th, 2026</p>
+            <p class="hero-venue">Concord High School &mdash; 4200 Concord Blvd, Concord, CA 94521</p>
+            <p class="hero-free-badge">FREE ADMISSION &bull; TCG SHOW</p>
             <div class="hero-cta-group">
-                <a href="https://www.eventbrite.com/e/1984632272552?aff=oddtdtcreator" target="_blank" rel="noopener noreferrer" class="btn btn-primary">Get Tickets</a>
-                <a href="https://www.eventbrite.com/e/1984632272552?aff=oddtdtcreator" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">Become a Vendor</a>
+                <a href="https://www.eventbrite.com/e/diablo-valley-card-show-tickets-1988978485191?aff=oddtdtcreator" target="_blank" rel="noopener noreferrer" class="btn btn-primary">Reserve Free Tickets</a>
+                <a href="https://www.eventbrite.com/e/diablo-valley-card-show-tickets-1988978485191?aff=oddtdtcreator" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">Become a Vendor</a>
             </div>
         </div>
     </section>
@@ -1372,16 +1394,18 @@
     <!-- ==================== TICKER ==================== -->
     <div class="ticker-strip">
         <div class="ticker-content">
+            <span>&#9733; FREE ADMISSION &#9733;</span>
+            <span>TCG SHOW &#9733; POKEMON &#9733; SPORTS CARDS &#9733; TRADING CARDS</span>
             <span>&#9733; 120+ VENDOR TABLES &#9733;</span>
-            <span>SPORTS CARDS &#9733; POKEMON &#9733; TRADING CARDS</span>
-            <span>&#9733; TOYS &#9733; COMICS &#9733; COLLECTIBLES &#9733;</span>
-            <span>ADMISSION $10 &mdash; 10 & UNDER FREE</span>
-            <span>&#9733; APR 11 & APR 12 &#9733; 10AM - 4PM &#9733;</span>
+            <span>BUY &#9733; SELL &#9733; TRADE &#9733; CONNECT</span>
+            <span>&#9733; JUN 6 & JUN 7 &#9733; 10AM - 4PM &#9733;</span>
+            <span>&#9733; CONCORD HIGH SCHOOL &#9733;</span>
+            <span>&#9733; FREE ADMISSION &#9733;</span>
+            <span>TCG SHOW &#9733; POKEMON &#9733; SPORTS CARDS &#9733; TRADING CARDS</span>
             <span>&#9733; 120+ VENDOR TABLES &#9733;</span>
-            <span>SPORTS CARDS &#9733; POKEMON &#9733; TRADING CARDS</span>
-            <span>&#9733; TOYS &#9733; COMICS &#9733; COLLECTIBLES &#9733;</span>
-            <span>ADMISSION $10 &mdash; 10 & UNDER FREE</span>
-            <span>&#9733; APR 11 & APR 12 &#9733; 10AM - 4PM &#9733;</span>
+            <span>BUY &#9733; SELL &#9733; TRADE &#9733; CONNECT</span>
+            <span>&#9733; JUN 6 & JUN 7 &#9733; 10AM - 4PM &#9733;</span>
+            <span>&#9733; CONCORD HIGH SCHOOL &#9733;</span>
         </div>
     </div>
 
@@ -1390,12 +1414,12 @@
         <div class="container">
             <div class="about-grid">
                 <div class="about-image-wrapper reveal">
-                    <img src="Images/Flyer-old.png" alt="Diablo Valley Card Show Flyer">
+                    <img src="Images/Flyer-2026.png" alt="Diablo Valley Card Show — June 6 & 7, 2026 at Concord High School">
                 </div>
                 <div class="about-text reveal reveal-delay-1">
                     <h2>Welcome to the <span class="neon-text-blue">Diablo Valley</span> Card Show</h2>
-                    <p>The East Bay's most exciting destination for collectors, hobbyists, and fans. Whether you're hunting for a PSA 10 rookie, chasing vintage Pokemon pulls, or looking to flip your collection — this is the spot.</p>
-                    <p>We bring together over 120 vendors under one roof with everything from graded sports cards and sealed wax to vintage toys, comics, and more. Come shop, trade, and connect with the collector community.</p>
+                    <p>The East Bay's most exciting destination for TCG players, collectors, and fans. Whether you're chasing Pokemon pulls, hunting a PSA 10 rookie, or looking to trade your binder — this is the spot.</p>
+                    <p>We bring together over 120 vendors under one roof with everything from sealed wax and graded sports cards to vintage toys, comics, and more. <strong>And admission is FREE.</strong> Come shop, trade, and connect with the collector community.</p>
                     <div class="about-stats">
                         <div class="stat-item">
                             <span class="stat-number">120+</span>
@@ -1406,7 +1430,7 @@
                             <span class="stat-label">Big Days</span>
                         </div>
                         <div class="stat-item">
-                            <span class="stat-number">$10</span>
+                            <span class="stat-number" style="color: var(--neon-green); text-shadow: 0 0 20px rgba(57, 255, 20, 0.5), 0 0 40px rgba(57, 255, 20, 0.2);">FREE</span>
                             <span class="stat-label">Admission</span>
                         </div>
                     </div>
@@ -1424,7 +1448,7 @@
                 <div class="event-card reveal reveal-delay-1">
                     <span class="event-card-icon">&#128197;</span>
                     <h3>Dates</h3>
-                    <p>Saturday, April 11th<br>Sunday, April 12th, 2026</p>
+                    <p>Saturday, June 6th<br>Sunday, June 7th, 2026</p>
                     <p class="detail-sub">Two full days of collecting</p>
                 </div>
                 <div class="event-card reveal reveal-delay-2">
@@ -1436,26 +1460,26 @@
                 <div class="event-card reveal reveal-delay-3">
                     <span class="event-card-icon">&#128205;</span>
                     <h3>Location</h3>
-                    <p>Concord Plaza Hotel</p>
-                    <p class="detail-sub">45 John Glen Dr, Concord, CA</p>
+                    <p>Concord High School</p>
+                    <p class="detail-sub">4200 Concord Blvd, Concord, CA 94521</p>
                 </div>
                 <div class="event-card reveal reveal-delay-1">
                     <span class="event-card-icon">&#127915;</span>
                     <h3>Admission</h3>
-                    <p>$10 General Entry</p>
-                    <p class="detail-sub">Kids 10 &amp; under get in FREE</p>
+                    <p style="color: var(--neon-green); font-weight: 700;">FREE</p>
+                    <p class="detail-sub">Everyone gets in &mdash; all ages</p>
                 </div>
                 <div class="event-card reveal reveal-delay-2">
                     <span class="event-card-icon">&#128664;</span>
                     <h3>Parking</h3>
                     <p>Free Parking</p>
-                    <p class="detail-sub">On-site hotel lot</p>
+                    <p class="detail-sub">On-site school lot</p>
                 </div>
                 <div class="event-card reveal reveal-delay-3">
                     <span class="event-card-icon">&#127183;</span>
                     <h3>Vendors</h3>
                     <p>120+ Tables</p>
-                    <p class="detail-sub">Cards, toys, comics &amp; more</p>
+                    <p class="detail-sub">TCG, sports cards, toys &amp; more</p>
                 </div>
             </div>
         </div>
@@ -1512,14 +1536,15 @@
                     <h3>Why Vend With Us</h3>
                     <ul>
                         <li>120+ tables with high foot traffic</li>
-                        <li>Prime East Bay location off Hwy 242</li>
+                        <li>FREE admission drives bigger crowds</li>
+                        <li>Prime East Bay location at Concord High School</li>
                         <li>Two full days of selling</li>
                         <li>Strong social media promotion</li>
-                        <li>Collector-focused audience</li>
-                        <li>Hotel venue with free parking</li>
+                        <li>TCG &amp; collector-focused audience</li>
+                        <li>Free on-site parking</li>
                     </ul>
-                    <h3>Get Your Tickets & Tables</h3>
-                    <a href="https://www.eventbrite.com/e/1984632272552?aff=oddtdtcreator" target="_blank" rel="noopener noreferrer" class="btn btn-primary" style="display: inline-block; margin-bottom: 1.5rem; text-align: center;">Buy on Eventbrite</a>
+                    <h3>Reserve Tickets &amp; Tables</h3>
+                    <a href="https://www.eventbrite.com/e/diablo-valley-card-show-tickets-1988978485191?aff=oddtdtcreator" target="_blank" rel="noopener noreferrer" class="btn btn-primary" style="display: inline-block; margin-bottom: 1.5rem; text-align: center;">Reserve on Eventbrite</a>
                     <h3>Contact Us Directly</h3>
                     <p style="color: var(--text-muted); line-height: 1.7;">
                         DM us on Instagram for the fastest response.
@@ -1575,11 +1600,11 @@
             <div class="past-events-grid">
                 <div class="past-event-card reveal">
                     <div class="past-event-image">
-                        <img src="Images/Flyer.png" alt="Previous Diablo Valley Card Show Flyer">
+                        <img src="Images/Flyer.png" alt="April 2026 Diablo Valley Card Show at Concord Plaza Hotel">
                     </div>
                     <div class="past-event-info">
-                        <h3>Diablo Valley Card Show</h3>
-                        <p>Our previous card show at the Concord Plaza Hotel.</p>
+                        <h3>April 2026 &mdash; Concord Plaza Hotel</h3>
+                        <p>A packed weekend at the Concord Plaza Hotel. Thanks to all the vendors and collectors who came out.</p>
                     </div>
                 </div>
                 <div class="past-event-card reveal reveal-delay-1">
@@ -1623,9 +1648,10 @@
                     <div style="margin-top: 2rem;">
                         <h4>Event</h4>
                         <ul class="footer-links">
-                            <li><a href="#">Apr 11 & 12, 2026</a></li>
+                            <li><a href="#">Jun 6 & 7, 2026</a></li>
                             <li><a href="#">10 AM – 4 PM</a></li>
-                            <li><a href="#">Concord Plaza Hotel</a></li>
+                            <li><a href="#">Concord High School</a></li>
+                            <li><a href="#" style="color: var(--neon-green);">FREE Admission</a></li>
                         </ul>
                     </div>
                 </div>

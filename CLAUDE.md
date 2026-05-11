@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Project Overview
 
-**Diablo Valley Card Show (DVCSHOW)** — A single-page marketing website for a card and collectibles convention held at Concord Plaza Hotel, Concord, CA. The site uses a retro/arcade-inspired dark theme with neon accents.
+**Diablo Valley Card Show (DVCSHOW)** — A single-page marketing website for a TCG, sports cards, and collectibles convention held at Concord High School, Concord, CA. The site uses a retro/arcade-inspired dark theme with neon accents.
 
 ## Tech Stack
 
@@ -25,13 +25,14 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## Event Details (keep current)
 
-- **Dates:** April 11 & 12, 2026
+- **Dates:** June 6 & 7, 2026
 - **Hours:** 10 AM – 4 PM
-- **Venue:** Concord Plaza Hotel, 45 John Glen Dr, Concord, CA
-- **Admission:** $10 (kids 10 & under free)
+- **Venue:** Concord High School, 4200 Concord Blvd, Concord, CA 94521
+- **Admission:** FREE (all ages)
 - **Tables:** 120+
-- **Trade Night:** DVY Collectibles, 1150 Arnold Drive Suite D, Martinez, CA — Apr 11th evening
-- **Instagram:** @dvcshow
+- **Focus:** TCG show (Pokemon, sports cards, trading cards, collectibles)
+- **Past venue:** Concord Plaza Hotel, 45 John Glen Dr (April 2026 show — now shown in Past Events section)
+- **Instagram:** @diablovalleycardshow
 
 ## Deployment
 
